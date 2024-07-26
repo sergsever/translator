@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<script src="~/js/jquery-3.7.1.min.js"></script>
+<script src="~/js/site.js"></script>
+
+<h3>About</h3>
+<h3 id="about"></h3>
+
+<div class="translation">
+<h2>Интерфейс к yandex translate API</h2>
+
+<label for="totranslate">Текст:</label><input id="text" type="text" />
+<br><label>Язык:</label><input id="lang" type="text" />
+</br><label>Перевод:</label><span id="translation"></span>
+	<br></br><br><button id="btntranlate" onclick="ExecTranslate()">Перевести</button>
+</div>
