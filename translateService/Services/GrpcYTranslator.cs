@@ -2,11 +2,11 @@
 
 namespace translateService.Services
 {
-	public class GrpcYTranslator : GrpcCachedYTranslator.GrpcCachedYTranslatorBase
+	public class GrpcYTranslator : GrpcCachedTranslator.GrpcCachedTranslatorBase
 	{
-		private CachedYtranslator translator;
+		private ICachedTranslator translator;
 
-		public GrpcYTranslator(CachedYtranslator translator)
+		public GrpcYTranslator(ICachedTranslator translator)
 		{
 			this.translator = translator;
 		}
@@ -19,9 +19,9 @@ namespace translateService.Services
 			{
 				foreach (string totranslate in request.Text)
 				{
-					string translation =  translator.TranslateWithCache(request.Lang, totranslate).Result;
+					string translation =  translator.TranslateWithCache(request.Langfrom, request.Langto, totranslate).Result;
 					response.Text.Add(translation);
-					response.Lang = request.Lang;
+					response.Lang = request.Langto;
 				}
 			}
 			catch(Exception ex)

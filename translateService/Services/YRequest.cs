@@ -3,6 +3,7 @@
 	public class YRequest
 	{
 		public string targetLanguageCode { get; set; }
+		public string SourceLanguageCode { get; set; }	
 		public string texts { get; set; }
 		public string folderId { get; set; }
 		public YRequest()

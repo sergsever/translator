@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 
 namespace translateService.Services
 {
-	public class YTranslator 
+	public class YTranslator : ITranslate
 	{
 		private string BaseUrl;
 		private string Token;
@@ -18,14 +18,13 @@ namespace translateService.Services
 			this.BaseUrl = conf["Yandex:baseurl"];
 			this.Token = conf["Yandex:token"];
 			this.http = new HttpClient();
-
 		}
 
-		protected async Task<string> Translate(string lang, string text)
-		{
-			string result = "";
+	public async Task<string> Translate(string langfrom, string langto, string text)
+	{
+		string result = "";
 
-			YRequest request = new YRequest() { targetLanguageCode = lang, texts = text };
+			YRequest request = new YRequest() { targetLanguageCode = langto, texts = text };
 /*
 			HttpRequestMessage message = new HttpRequestMessage()
 			{
@@ -41,7 +40,7 @@ namespace translateService.Services
 
 			StringContent content = new StringContent(JsonConvert.SerializeObject(request));
 
-			var response = await http.PostAsync(BaseUrl, content);
+			HttpResponseMessage response = await http.PostAsync(BaseUrl, content);
 /*
 			if (response.StatusCode != System.Net.HttpStatusCode.OK)
 			{

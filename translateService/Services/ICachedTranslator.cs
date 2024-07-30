@@ -1,7 +1,7 @@
 ﻿namespace translateService.Services
 {
-	public interface CachedTranslator
+	public interface ICachedTranslator
 	{
-		public Task<string> TranslateWithCache(string lang, string totranslate);
+		public Task<string> TranslateWithCache(string langfrom, string langto, string totranslate);
 	}
 }

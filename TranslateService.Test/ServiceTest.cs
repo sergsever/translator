@@ -13,9 +13,10 @@ namespace TranslateService.Test
 		public async Task TranslateTestAsync()
 		{
 			ITranslate translator = new YTranslator();
-			string lang = "ru";
+			string langfrom = "en";
+			string langto = "ru";
 			string totranslate = "understand";
-			string result = await translator.TranslateAsync(lang, totranslate);
+			string result = await translator.Translate(langfrom, langto, totranslate);
 			Assert.True(result == "понимать");
 		}
 

@@ -11,14 +11,14 @@ namespace translateService.Controllers
 	[ApiController]
 	public class TranslateController : Controller
 	{
-		private CachedYtranslator translater;
-		public TranslateController(CachedYtranslator translater)
+		private ICachedTranslator translater;
+		public TranslateController(ICachedTranslator translater)
 		{
 			this.translater = translater;
 		}
 		/*text может содержать несколько строк, разделенных '\n'("\n\r")*/
 		[HttpGet]
-		public async Task<string>  Get(string lang, string text)
+		public async Task<string>  Get(string langfrom, string langto, string text)
 		{
 			List<string> translations = new List<string>();
 
@@ -30,7 +30,7 @@ namespace translateService.Controllers
 
 					foreach (string totranslate in strings)
 					{
-						string translation = await translater.TranslateWithCache(lang, totranslate);
+						string translation = await translater.TranslateWithCache(langfrom, langto, totranslate);
 						if (translation != null)
 						{
 							translations.Add(translation);
@@ -40,7 +40,7 @@ namespace translateService.Controllers
 				}
 				else
 				{
-					string onetranslation = await translater.TranslateWithCache(lang, text);
+					string onetranslation = await translater.TranslateWithCache(langfrom, langto, text);
 					if (onetranslation != null)
 					{
 						//						translations.Add(onetranslation);

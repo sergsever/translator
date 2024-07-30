@@ -15,11 +15,13 @@ namespace translateService
 			// Add services to the container.
 			var cbuilder = new ConfigurationBuilder();
 			string access = cbuilder.AddJsonFile("appsettings.json").Build()["access"];
+			builder.Services.AddDbContext<TranslateContext>();
+			builder.Services.AddScoped<YTranslator>();
+			builder.Services.AddScoped<ICachedTranslator>();
+
 			if (access == "grpc")
 			{
 				builder.Services.AddGrpc();
-				builder.Services.AddDbContext<TranslateContext>();
-				builder.Services.AddScoped<CachedYtranslator>();
 				builder.Services.AddCodeFirstGrpc(config =>
 				{
 					config.ResponseCompressionLevel = System.IO.Compression.CompressionLevel.Optimal;
@@ -33,8 +35,6 @@ namespace translateService
 			else
 			{
 				builder.Services.AddRazorPages();
-				builder.Services.AddDbContext<TranslateContext>();
-				builder.Services.AddScoped<CachedYtranslator>();
 				builder.Services.AddControllers();
 
 				 app = builder.Build();
