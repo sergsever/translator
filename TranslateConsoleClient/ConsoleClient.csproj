@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Protos\translator.proto" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.28.0-rc1" />
     <PackageReference Include="Grpc.Net.Client" Version="2.65.0-pre1" />
     <PackageReference Include="Grpc.Tools" Version="2.65.0">
@@ -23,13 +19,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\translator.proto" GrpcServices="Client" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Protos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Translate.Grpc\Translate.Grpc.csproj" />
   </ItemGroup>
 
 </Project>

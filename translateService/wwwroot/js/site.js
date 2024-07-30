@@ -9,12 +9,13 @@ function getAboutInfo() {
 
 function ExecTranslate() {
 	console.log("translate");
-	var lang = document.getElementById("lang").value;
+	var langfrom = document.getElementById("langfrom").value;
+	var langto = document.getElementById("langto").value;
 	var textElement = document.getElementById("text");
 	var text = textElement.value;
 
 	console.log("lang, text:", lang, text);
-	var params = "?lang=" + lang + "&text=" + text;
+	var params = "?langfrom=" + langfrom + "&langto=" + langto + "&text=" + text;
 	var url = "/api/Translate" + params
 	console.log("translate url:", url);
 	$.get(url, function(data){

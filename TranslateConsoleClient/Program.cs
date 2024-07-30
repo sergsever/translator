@@ -11,12 +11,13 @@ namespace TranslateConsoleClient
 				.AddJsonFile("appsettings.json");
 			var conf = builder.Build();
 			string access = conf["AccessType"];
-			string lang = "";
+			string langfrom = "";
+			string langto = "";
 			string text = "";
 #if DEBUG
-			if (args.Length != 2)
+			if (args.Length != 3)
 #else
-lang =		if (args.length != 3)
+lang =		if (args.length != 4)
 #endif
 			{
 				Console.WriteLine("ugage: ConsoleClient <lang> <text to translate>\n");
@@ -24,12 +25,13 @@ lang =		if (args.length != 3)
 			else 
 			{
 #if DEBUG
-				lang = args[0];
-				text = args[1];
-#else
-				lang = args[1];
+				langfrom = args[0];
+				langto = args[1];
 				text = args[2];
-
+#else
+				langfrom = args[1];
+				langto = args[2];
+				text = args[3];
 #endif
 			}
 			ITranslator? client = null;
@@ -41,7 +43,7 @@ lang =		if (args.length != 3)
 			{
 				client = new HttpTranslateClient();
 			}
-			string translation = client.Translate(lang, text);
+			string translation = client.Translate(langfrom, langto, text);
 			Console.WriteLine(translation);
 		}
 	}

@@ -2,6 +2,6 @@
 {
 	public interface ICachedTranslator
 	{
-		public Task<string> TranslateWithCache(string langfrom, string langto, string totranslate);
+		Task<string> TranslateWithCache(string langfrom, string langto, string totranslate);
 	}
 }

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
 using translateService.Data;
@@ -15,37 +16,41 @@ namespace translateService
 			// Add services to the container.
 			var cbuilder = new ConfigurationBuilder();
 			string access = cbuilder.AddJsonFile("appsettings.json").Build()["access"];
-			builder.Services.AddDbContext<TranslateContext>();
-			builder.Services.AddScoped<YTranslator>();
-			builder.Services.AddScoped<ICachedTranslator>();
+			builder.Services.Configure<YOptions>(builder.Configuration.GetSection("Yandex"));
+			builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStrings"));
+			builder.Services.AddSingleton<TranslateContext>();
+			builder.Services.AddSingleton<ITranslate, YTranslator>();
+			builder.Services.AddSingleton<Cachedranslator>();
 
-			if (access == "grpc")
-			{
+//			if (access == "grpc")
+//			{
 				builder.Services.AddGrpc();
 				builder.Services.AddCodeFirstGrpc(config =>
 				{
 					config.ResponseCompressionLevel = System.IO.Compression.CompressionLevel.Optimal;
 				});
 
-				app = builder.Build();
-				app.MapGrpcService<GrpcYTranslator>();
-				app.Run();
+//				app = builder.Build();
+//				app.MapGrpcService<GrpcYTranslator>();
+//				app.Run();
 
-			}
-			else
-			{
-				builder.Services.AddRazorPages();
+//			}
+	//		else
+//			{
+//				builder.Services.AddRazorPages();
 				builder.Services.AddControllers();
 
 				 app = builder.Build();
-				app.MapControllers();
+			app.MapGrpcService<GrpcTranslator>();
+
+			app.MapControllers();
 				var scope = app.Services.CreateScope();
 
 				TranslateContext dbcontext = scope.ServiceProvider.GetRequiredService<TranslateContext>();
 				dbcontext.Database.EnsureCreated();
 				app.Run();
 
-			}
+//			}
 
 
 
@@ -54,8 +59,8 @@ namespace translateService
 			if (app.Environment.IsDevelopment())
 			{
 			}
-			if (access != "grpc")
-			{ }
+//			if (access != "grpc")
+//			{ }
 			app.UseHttpsRedirection();
 
 			app.UseAuthorization();

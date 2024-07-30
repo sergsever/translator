@@ -2,16 +2,16 @@
 
 namespace translateService.Services
 {
-	public class GrpcYTranslator : GrpcCachedTranslator.GrpcCachedTranslatorBase
+	public class GrpcTranslator : GrpcCachedTranslator.GrpcCachedTranslatorBase
 	{
 		private ICachedTranslator translator;
 
-		public GrpcYTranslator(ICachedTranslator translator)
+		public GrpcTranslator(ICachedTranslator translator)
 		{
 			this.translator = translator;
 		}
 
-		public override Task<TranslateResponse> TranslateWithCache(TranslateRequest request, ServerCallContext context)
+		public override Task<TranslateResponse> Translate(TranslateRequest request, ServerCallContext context)
 		{
 
 			TranslateResponse response = new TranslateResponse();

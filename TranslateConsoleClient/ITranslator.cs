@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleClient
 {
-	internal interface ITranslator
+	 interface ITranslator
 	{
-		public string Translate(string lang, string text);
+		string Translate(string langfrom, string langto, string text);
 	}
 }

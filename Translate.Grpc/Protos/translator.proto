@@ -3,16 +3,16 @@ syntax = "proto3";
 option csharp_namespace = "translateService.Services";
 package translateService;
 service GrpcCachedTranslator {
-	rpc TranslateWithCache(TranslateRequest) returns (TranslateResponse);
+	rpc Translate(TranslateRequest) returns (TranslateResponse);
 }
 
 message TranslateRequest{
-	string langfrom = 1;
-	string langto = 2;
-	repeated string text = 3;
+	string Langfrom = 1;
+	string Langto = 2;
+	repeated string Text = 3;
 }
 
 message TranslateResponse{
-	string lang = 1;
-	repeated string text = 2;
+	string Lang = 1;
+	repeated string Text = 2;
 }

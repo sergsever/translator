@@ -18,13 +18,10 @@ namespace ConsoleClient
 			http = new HttpClient();
 		}
 
-		public string Translate(string lang, string text)
+		public string Translate(string langfrom, string langto, string text)
 		{
 			string result = "";
-			string parameters = new StringBuilder("?lang=")
-				.Append(lang)
-				.Append("&text=")
-				.Append(text).ToString();
+			string parameters = string.Format("?langfrom={0}&langto={1}&text={2}", langfrom, langto, text);
 			string url = baseurl + parameters;
 			var resp = http.GetAsync(url).Result;
 			if (resp != null)

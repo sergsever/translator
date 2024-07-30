@@ -1,33 +1,31 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace translateService.Data
 {
 	public class TranslateContext : DbContext
 	{
-		public TranslateContext() : base() { }
-		public TranslateContext(DbContextOptions<TranslateContext> options) : base(GetOptions()) 
+		private readonly IOptions<ConnectionStrings> connectionStrings;
+		public TranslateContext(IOptions<ConnectionStrings> connectionStrings) : base(GetOptions(connectionStrings.Value.Mssql)) {
+			this.connectionStrings = connectionStrings;
+		}
+		public TranslateContext(DbContextOptions<TranslateContext> options, IOptions<ConnectionStrings> connectionStrings) : base(GetOptions(connectionStrings.Value.Mssql))
 		{ 
-			if (Translations == null)
-			{
-			}
+			this.connectionStrings = connectionStrings;
 		}
 
-/*
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			base.OnConfiguring(optionsBuilder);
-			optionsBuilder.UseInMemoryDatabase("translations");
+			optionsBuilder.UseSqlServer(connectionStrings.Value.Mssql);
 
 		}
-*/
-		private static DbContextOptions<TranslateContext> GetOptions()
+
+		private static DbContextOptions<TranslateContext> GetOptions(string connectionString)
 		{
-			var cbuilder = new ConfigurationBuilder();
-			var conf = cbuilder.AddJsonFile("appsettings.json").Build();
-			string conn = conf.GetConnectionString("mssql");
 
 			var builder = new DbContextOptionsBuilder<TranslateContext>();
-			return builder.UseSqlServer(conn).Options;
+			return builder.UseSqlServer(connectionString).Options;
 		}
 
 
@@ -35,7 +33,7 @@ namespace translateService.Data
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
-			modelBuilder.Entity<Translation>();
+			modelBuilder.Entity<Translation>().HasKey(t => new { t.Text, t.Lang });
 		}
 	}
 }

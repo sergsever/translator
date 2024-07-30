@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
+using translateService.Data;
 using translateService.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,46 +17,26 @@ namespace translateService.Controllers
 		{
 			this.translater = translater;
 		}
-		/*text может содержать несколько строк, разделенных '\n'("\n\r")*/
 		[HttpGet]
 		public async Task<string>  Get(string langfrom, string langto, string text)
 		{
-			List<string> translations = new List<string>();
+			string translation = "";
 
 			try
 			{
-				if (text.Contains('\n'))
 				{
-					string[] strings = text.Split('\n');
-
-					foreach (string totranslate in strings)
+					translation = await translater.TranslateWithCache(langfrom, langto, text);
+					if (translation != null)
 					{
-						string translation = await translater.TranslateWithCache(langfrom, langto, totranslate);
-						if (translation != null)
-						{
-							translations.Add(translation);
-						}
-					}
-
-				}
-				else
-				{
-					string onetranslation = await translater.TranslateWithCache(langfrom, langto, text);
-					if (onetranslation != null)
-					{
-						//						translations.Add(onetranslation);
-						return onetranslation;
+						return translation;
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				translations.Add(ex.Message);
+				translation = ex.Message;
 			}
-			string json = JsonConvert.SerializeObject(translations);
-
-//			byte[] bytes = Encoding.Default.GetBytes(json);
-//			json = Encoding.UTF8.GetString(bytes);
+			string json = JsonConvert.SerializeObject(translation);
 
 			return json;
 		}

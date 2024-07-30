@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Protos\translator.proto" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -42,12 +38,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\translator.proto" GrpcServices="Server" />
+    <Folder Include="Pages\" />
+    <Folder Include="Protos\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\" />
-    <Folder Include="wwwroot\js\" />
+    <ProjectReference Include="..\Translate.Grpc\Translate.Grpc.csproj" />
   </ItemGroup>
 
 </Project>
