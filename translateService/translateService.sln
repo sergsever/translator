@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "..\Transla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translate.Grpc", "..\Translate.Grpc\Translate.Grpc.csproj", "{6BCF268D-180F-4852-9DE5-AD1A07F26CBE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslateService.Test", "..\TranslateService.Test\TranslateService.Test.csproj", "{A7E76F97-1179-431D-B7CA-3EDCBDE4EBFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6BCF268D-180F-4852-9DE5-AD1A07F26CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BCF268D-180F-4852-9DE5-AD1A07F26CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BCF268D-180F-4852-9DE5-AD1A07F26CBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7E76F97-1179-431D-B7CA-3EDCBDE4EBFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7E76F97-1179-431D-B7CA-3EDCBDE4EBFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7E76F97-1179-431D-B7CA-3EDCBDE4EBFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7E76F97-1179-431D-B7CA-3EDCBDE4EBFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

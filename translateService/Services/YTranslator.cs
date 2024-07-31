@@ -27,41 +27,49 @@ namespace translateService.Services
 	{
 		string result = "";
 
+			try
+			{ 
 			YRequest request = new YRequest() { targetLanguageCode = langto, texts = text };
-/*
-			HttpRequestMessage message = new HttpRequestMessage()
-			{
-				RequestUri = new Uri(this.BaseUrl),
-				Method = HttpMethod.Post,
-				Content = new StringContent(JsonConvert.SerializeObject(request))
+			/*
+						HttpRequestMessage message = new HttpRequestMessage()
+						{
+							RequestUri = new Uri(this.BaseUrl),
+							Method = HttpMethod.Post,
+							Content = new StringContent(JsonConvert.SerializeObject(request))
 
-			};
-			message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", this.Token);
-*/
+						};
+						message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", this.Token);
+			*/
 			http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", this.Token);
 			http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 			StringContent content = new StringContent(JsonConvert.SerializeObject(request));
 
 			HttpResponseMessage response = await http.PostAsync(BaseUrl, content);
-/*
-			if (response.StatusCode != System.Net.HttpStatusCode.OK)
-			{
-				throw new Exception("Status code is " + response.StatusCode);
-			}
-*/
+			/*
+						if (response.StatusCode != System.Net.HttpStatusCode.OK)
+						{
+							throw new Exception("Status code is " + response.StatusCode);
+						}
+			*/
 			string resp = await response.Content.ReadAsStringAsync();
 			if (resp != null)
 			{
-			
+
 				Debug.WriteLine("resp: " + resp);
-				YResponse? answer = JsonConvert.DeserializeObject <YResponse> (resp);
+				YResponse? answer = JsonConvert.DeserializeObject<YResponse>(resp);
 				if (answer != null)
 				{
 					result = answer.translations.First().text;
 				}
-//				result = answer.text;
 			}
+			}
+			catch (Exception ex)
+			{
+				result = ex.Message;
+			}
+//				result = answer.text;
+			
 
 		
 
